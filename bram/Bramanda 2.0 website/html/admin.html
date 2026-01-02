@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BRAMANDA Admin - Order Status</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: #0d0d0d;
+            color: #fff;
+            font-family: 'Courier New', monospace;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            color: #ff4500;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .section {
+            background: #1a1a1a;
+            border: 2px solid #ff4500;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .status-card {
+            background: #2a2a2a;
+            border-left: 4px solid #ffff00;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .status-card h3 {
+            color: #ffff00;
+            margin-bottom: 10px;
+        }
+        
+        .status-card p {
+            color: #ccc;
+            font-size: 14px;
+            margin: 5px 0;
+        }
+        
+        .success {
+            border-left-color: #00ff00;
+            background: #0a2a0a;
+        }
+        
+        .success h3 {
+            color: #00ff00;
+        }
+        
+        .error {
+            border-left-color: #ff0000;
+            background: #2a0a0a;
+        }
+        
+        .error h3 {
+            color: #ff6666;
+        }
+        
+        button {
+            background: #ff4500;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-weight: bold;
+            margin: 10px 5px 10px 0;
+            text-transform: uppercase;
+        }
+        
+        button:hover {
+            background: #ffff00;
+            color: #000;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            background: #2a2a2a;
+        }
+        
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #444;
+            font-size: 13px;
+        }
+        
+        th {
+            background: #ff4500;
+            color: #000;
+            font-weight: bold;
+        }
+        
+        tr:hover {
+            background: #333;
+        }
+        
+        .loading {
+            color: #ffff00;
+            font-style: italic;
+        }
+        
+        .footer {
+            text-align: center;
+            color: #666;
+            margin-top: 50px;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔧 BRAMANDA Admin Dashboard</h1>
+        
+        <!-- Connection Status -->
+        <div class="section">
+            <h2>Connection Status</h2>
+            <div id="connection-status">
+                <p class="loading">Checking connection...</p>
+            </div>
+            <button onclick="testConnection()">Test Connection</button>
+            <button onclick="initializeDatabase()">Initialize Database</button>
+        </div>
+        
+        <!-- Orders -->
+        <div class="section">
+            <h2>Recent Orders</h2>
+            <button onclick="loadOrders()">Refresh Orders</button>
+            <div id="orders-list">
+                <p class="loading">Loading orders...</p>
+            </div>
+        </div>
+        
+        <!-- Products -->
+        <div class="section">
+            <h2>Products</h2>
+            <button onclick="loadProducts()">Refresh Products</button>
+            <div id="products-list">
+                <p class="loading">Loading products...</p>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>BRAMANDA Admin v1.0 | MySQL Backend Status Monitor</p>
+        </div>
+    </div>
+
+    <script src="../js/config.js"></script>
+    <script>
+        // Test Backend Connection
+        function testConnection() {
+            document.getElementById('connection-status').innerHTML = '<p class="loading">Testing...</p>';
+            
+            fetch(getBackendUrl('products.php?action=get_products'))
+                .then(r => r.json())
+                .then(data => {
+                    if (data.success) {
+                        document.getElementById('connection-status').innerHTML = `
+                            <div class="status-card success">
+                                <h3>✓ Connected to Backend</h3>
+                                <p>Backend URL: ${BRAMANDA_CONFIG.backendUrl}</p>
+                                <p>Response: OK (${data.products ? data.products.length : 0} products found)</p>
+                            </div>
+                        `;
+                    } else {
+                        throw new Error(data.error);
+                    }
+                })
+                .catch(e => {
+                    document.getElementById('connection-status').innerHTML = `
+                        <div class="status-card error">
+                            <h3>✗ Connection Failed</h3>
+                            <p>Error: ${e.message}</p>
+                            <p>Backend URL: ${BRAMANDA_CONFIG.backendUrl}</p>
+                            <p>Check config.js for correct domain name</p>
+                        </div>
+                    `;
+                });
+        }
+        
+        // Initialize Database
+        function initializeDatabase() {
+            document.getElementById('connection-status').innerHTML = '<p class="loading">Initializing database...</p>';
+            
+            fetch(getBackendUrl('setup_database.php'))
+                .then(r => r.json())
+                .then(data => {
+                    let html = '<div class="status-card ' + (data.success ? 'success' : 'error') + '">';
+                    html += '<h3>' + (data.success ? '✓' : '✗') + ' Database Setup</h3>';
+                    data.messages.forEach(msg => {
+                        html += '<p>' + msg + '</p>';
+                    });
+                    html += '</div>';
+                    document.getElementById('connection-status').innerHTML = html;
+                })
+                .catch(e => {
+                    document.getElementById('connection-status').innerHTML = `
+                        <div class="status-card error">
+                            <h3>✗ Setup Failed</h3>
+                            <p>Error: ${e.message}</p>
+                        </div>
+                    `;
+                });
+        }
+        
+        // Load Orders
+        function loadOrders() {
+            document.getElementById('orders-list').innerHTML = '<p class="loading">Loading orders...</p>';
+            
+            fetch(getBackendUrl('orders.php?action=get_orders'))
+                .then(r => r.json())
+                .then(data => {
+                    if (data.success && data.orders.length > 0) {
+                        let html = '<table><tr><th>ID</th><th>Customer</th><th>Email</th><th>Amount</th><th>Status</th><th>Date</th></tr>';
+                        data.orders.forEach(order => {
+                            html += `<tr>
+                                <td>${order.id}</td>
+                                <td>${order.customer_name}</td>
+                                <td>${order.customer_email}</td>
+                                <td>₹${order.total_amount}</td>
+                                <td><strong>${order.order_status}</strong></td>
+                                <td>${new Date(order.created_at).toLocaleDateString()}</td>
+                            </tr>`;
+                        });
+                        html += '</table>';
+                        document.getElementById('orders-list').innerHTML = html;
+                    } else {
+                        document.getElementById('orders-list').innerHTML = '<p style="color: #999;">No orders yet</p>';
+                    }
+                })
+                .catch(e => {
+                    document.getElementById('orders-list').innerHTML = `<div class="status-card error"><h3>✗ Error</h3><p>${e.message}</p></div>`;
+                });
+        }
+        
+        // Load Products
+        function loadProducts() {
+            document.getElementById('products-list').innerHTML = '<p class="loading">Loading products...</p>';
+            
+            fetch(getBackendUrl('products.php?action=get_products'))
+                .then(r => r.json())
+                .then(data => {
+                    if (data.success && data.products.length > 0) {
+                        let html = '<table><tr><th>ID</th><th>Code</th><th>Product</th><th>Price</th><th>Stock</th></tr>';
+                        data.products.forEach(product => {
+                            html += `<tr>
+                                <td>${product.id}</td>
+                                <td>${product.product_code}</td>
+                                <td>${product.product_name}</td>
+                                <td>₹${product.price}</td>
+                                <td>${product.stock_quantity}</td>
+                            </tr>`;
+                        });
+                        html += '</table>';
+                        document.getElementById('products-list').innerHTML = html;
+                    } else {
+                        document.getElementById('products-list').innerHTML = '<p style="color: #999;">No products found</p>';
+                    }
+                })
+                .catch(e => {
+                    document.getElementById('products-list').innerHTML = `<div class="status-card error"><h3>✗ Error</h3><p>${e.message}</p></div>`;
+                });
+        }
+        
+        // Auto-load on page start
+        window.addEventListener('load', () => {
+            testConnection();
+            loadProducts();
+            loadOrders();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+{
+	"nodes":[
+		{"id":"0311734b47d90fdc","type":"file","file":"Project timecapsule/timecapsule.png","x":-220,"y":-600,"width":604,"height":340},
+		{"id":"885377ea8b544629","type":"text","text":"TimeCapsule\n","x":-80,"y":-1100,"width":250,"height":60,"color":"4"},
+		{"id":"a41b17e613bb9be3","type":"text","text":"\tFeatures\n- Helps you understand the limitaion of time you got\n- shows the time in years and date \n\t","x":-380,"y":-960,"width":250,"height":283},
+		{"id":"09ab65223a46ea5d","type":"text","text":"Graphical user interface \n","x":-43,"y":-708,"width":250,"height":62},
+		{"id":"db40c0d84bd5b24b","type":"text","text":"Interface\n- start button that begins the countdown\n- reset the time  if any mistake for the timer is set\n- 2 date filler\n- save the timer data so that if the app is exited it needs to resume from the previous \n- a setting and feedback  tab\n- ","x":384,"y":-1180,"width":250,"height":503,"color":"6"}
+	],
+	"edges":[
+		{"id":"a02a4c226cd2472e","fromNode":"885377ea8b544629","fromSide":"bottom","toNode":"a41b17e613bb9be3","toSide":"top","color":"1"},
+		{"id":"dd15c404be8ee101","fromNode":"885377ea8b544629","fromSide":"bottom","toNode":"09ab65223a46ea5d","toSide":"top","color":"1"},
+		{"id":"4a3dc518561078e4","fromNode":"0311734b47d90fdc","fromSide":"top","toNode":"09ab65223a46ea5d","toSide":"bottom"},
+		{"id":"4c95ceb1c227a306","fromNode":"885377ea8b544629","fromSide":"bottom","toNode":"db40c0d84bd5b24b","toSide":"left","color":"1"}
+	]
+}

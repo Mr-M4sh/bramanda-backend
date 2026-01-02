@@ -1,0 +1,12 @@
+{
+	"nodes":[
+		{"id":"2c966dbafe5c08dd","x":-380,"y":-100,"width":140,"height":50,"color":"6","type":"text","text":"Bramanda "},
+		{"id":"c6f0e70609e55384","x":-260,"y":200,"width":250,"height":60,"color":"1","type":"text","text":""}
+	],
+	"edges":[
+		{"id":"d59b03c88db121ad","fromNode":"2c966dbafe5c08dd","fromSide":"right","toNode":"c6f0e70609e55384","toSide":"left","color":"4"},
+		{"id":"68af9026cdc4ad87","fromNode":"2c966dbafe5c08dd","fromSide":"bottom","toNode":"c6f0e70609e55384","toSide":"top","color":"2"},
+		{"id":"955f26599d01aff0","fromNode":"2c966dbafe5c08dd","fromSide":"top","toNode":"c6f0e70609e55384","toSide":"bottom","color":"1"},
+		{"id":"89d89de5aeddd3f5","fromNode":"2c966dbafe5c08dd","fromSide":"left","toNode":"c6f0e70609e55384","toSide":"right","color":"5"}
+	]
+}

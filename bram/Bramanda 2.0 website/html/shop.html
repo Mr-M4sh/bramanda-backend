@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop - BRAMANDA Premium Vape Store</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <a href="index.html" class="logo">BRAMANDA</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li class="dropdown">
+                    <a href="shop.html">Shop <span class="nav-arrow">▼</span></a>
+                    <div class="dropdown-content">
+                        <a href="shop.html?category=vapes">Premium Vapes</a>
+                        <a href="shop.html?category=mods">Mods</a>
+                        <a href="shop.html?category=liquids">E-Liquids</a>
+                    </div>
+                </li>
+                <li><a href="graphics.html">Gallery</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="featured-products" style="padding-top: 6rem;">
+            <div class="section-title">
+                <h2>Premium Collection</h2>
+                <p>Discover our complete range of vaping devices and accessories</p>
+            </div>
+            <div class="product-grid" id="shop-products-container">
+                <div class="product-card">
+                    <img src="https://via.placeholder.com/300x250?text=Phantom+Pro" alt="Phantom Pro Max">
+                    <div class="product-info">
+                        <h3>Phantom Pro Max</h3>
+                        <p>Advanced airflow control with 5000mAh battery. Premium build quality meets modern aesthetics.</p>
+                        <div class="product-price text-base md:text-lg">₹89.99</div>
+                        <button class="btn btn-primary" onclick="alert('Added to cart!')">Add to Cart</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <img src="https://via.placeholder.com/300x250?text=Nebula+Cloud" alt="Nebula Cloud">
+                    <div class="product-info">
+                        <h3>Nebula Cloud</h3>
+                        <p>Temperature control technology with sleek design. Premium vapor production for connoisseurs.</p>
+                        <div class="product-price text-base md:text-lg">₹74.99</div>
+                        <button class="btn btn-primary" onclick="alert('Added to cart!')">Add to Cart</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <img src="https://via.placeholder.com/300x250?text=Inferno+Elite" alt="Inferno Elite">
+                    <div class="product-info">
+                        <h3>Inferno Elite</h3>
+                        <p>Ultra-compact portable device. Rapid charging and extended battery life in pocket size.</p>
+                        <div class="product-price text-base md:text-lg">₹64.99</div>
+                        <button class="btn btn-primary" onclick="alert('Added to cart!')">Add to Cart</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <img src="https://via.placeholder.com/300x250?text=Vapor+Max+2000" alt="Vapor Max 2000">
+                    <div class="product-info">
+                        <h3>Vapor Max 2000</h3>
+                        <p>Professional-grade device with dual coil technology for maximum vapor production.</p>
+                        <div class="product-price text-base md:text-lg">₹99.99</div>
+                        <button class="btn btn-primary" onclick="alert('Added to cart!')">Add to Cart</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <img src="https://via.placeholder.com/300x250?text=Aura+Pod" alt="Aura Pod System">
+                    <div class="product-info">
+                        <h3>Aura Pod System</h3>
+                        <p>Convenient pod-based system with pre-filled or refillable options. Perfect for beginners.</p>
+                        <div class="product-price text-base md:text-lg">₹49.99</div>
+                        <button class="btn btn-primary" onclick="alert('Added to cart!')">Add to Cart</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <img src="https://via.placeholder.com/300x250?text=Crystal+E-Liquid" alt="Crystal E-Liquid Collection">
+                    <div class="product-info">
+                        <h3>Crystal E-Liquid Collection</h3>
+                        <p>Premium e-liquids with exotic flavors. Available in multiple nicotine strengths.</p>
+                        <div class="product-price text-base md:text-lg">₹14.99</div>
+                        <button class="btn btn-primary" onclick="alert('Added to cart!')">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-content">
+            <div class="footer-section company-info">
+                <h4>BRAMANDA</h4>
+                <p>Your destination for premium vaping experiences. Quality products, exceptional service, unforgettable moments.</p>
+            </div>
+            <div class="footer-section quick-links">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="shop.html">Shop</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section contact-info">
+                <h4>Contact Us</h4>
+                <p><strong>Email:</strong> info@bramanda.com</p>
+                <p><strong>Phone:</strong> +1 (555) 123-4567</p>
+                <p><strong>Hours:</strong> Mon - Fri, 9AM - 6PM EST</p>
+            </div>
+            <div class="footer-section social">
+                <h4>Follow Us</h4>
+                <p>Stay updated with our latest releases and exclusive offers.</p>
+                <p>Instagram • Facebook • Twitter • YouTube</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; <span id="current-year"></span> BRAMANDA. All rights reserved. | Premium Vape Store</p>
+        </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>
