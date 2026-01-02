@@ -2,13 +2,17 @@ const router = require("express").Router();
 const Order = require("../models/Order");
 const Finance = require("../models/Finance");
 const auth = require("../middleware/auth");
-const role = require("../middleware/role");
+const { getIO } = require("../config/socket");
 
 /**
  * Create order
  */
 router.post("/", auth, async (req, res) => {
   const order = await Order.create(req.body);
+
+  const io = getIO();
+  io.emit("orders:update", order);
+
   res.json(order);
 });
 
@@ -35,9 +39,6 @@ router.put("/:id/done", auth, async (req, res) => {
       { $inc: { totalRevenue: order.amount } },
       { upsert: true }
     );
-  }
 
-  res.json(order);
-});
+    const io = getIO();
 
-module.exports = router;
